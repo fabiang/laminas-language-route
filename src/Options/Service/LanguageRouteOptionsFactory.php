@@ -20,14 +20,25 @@ declare(strict_types=1);
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-namespace Fabiang\LaminasLanguageRoute\Entity;
+namespace Fabiang\LaminasLanguageRoute\Options\Service;
 
-/**
- * Simple interface to store locale in user entity
- */
-interface LocaleUserInterface
+use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+
+final class LanguageRouteOptionsFactory implements FactoryInterface
 {
-    public function getLocale(): string;
+    public const CONFIG_KEY = 'language-route';
 
-    public function setLocale(string $locale): void;
+    /**
+     * @param string $requestedName
+     */
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
+        ?array $options = null
+    ): LanguageRouteOptions {
+        $config = $container->get('config');
+        return new LanguageRouteOptions($config[static::CONFIG_KEY] ?? []);
+    }
 }

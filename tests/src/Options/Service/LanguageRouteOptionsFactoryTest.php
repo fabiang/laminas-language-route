@@ -1,0 +1,63 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * Copyright (C) 2016 schurix, 2022 Fabian Grutschus
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
+namespace Fabiang\LaminasLanguageRoute\Options\Service;
+
+use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
+use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
+
+/**
+ * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Options\Service\LanguageRouteOptionsFactory
+ */
+class LanguageRouteOptionsFactoryTest extends TestCase
+{
+    use ProphecyTrait;
+
+    private LanguageRouteOptionsFactory $factory;
+
+    protected function setUp(): void
+    {
+        $this->factory = new LanguageRouteOptionsFactory();
+    }
+
+    /**
+     * @test
+     * @covers ::__invoke
+     */
+    public function invoke(): void
+    {
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('config')
+            ->shouldBeCalled()
+            ->willReturn([
+                LanguageRouteOptionsFactory::CONFIG_KEY => [
+                    'homeRoute' => 'test',
+                ],
+            ]);
+
+        $instance = $this->factory->__invoke($container->reveal(), LanguageRouteOptions::class, []);
+        $this->assertInstanceOf(LanguageRouteOptions::class, $instance);
+        $this->assertSame('test', $instance->getHomeRoute());
+    }
+}

@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * Copyright (C) 2016 schurix
+ * Copyright (C) 2016 schurix, 2022 Fabian Grutschus
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,83 +20,77 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-namespace ZF2LanguageRoute\Listener;
+namespace Fabiang\LaminasLanguageRoute\Listener;
 
-use Zend\EventManager\AbstractListenerAggregate;
-use Zend\EventManager\EventManagerInterface;
-use ZF2LanguageRoute\Options\LanguageRouteOptions;
-use Zend\Mvc\MvcEvent;
-use Zend\Router\RouteStackInterface;
-use Zend\Stdlib\RequestInterface;
-use ZF2LanguageRoute\Mvc\Router\Http\LanguageTreeRouteStack;
-use Zend\I18n\Translator\TranslatorInterface;
-use Zend\Authentication\AuthenticationServiceInterface;
-use ZF2LanguageRoute\Entity\LocaleUserInterface;
-use ZfcUser\Mapper\User as ZfcUserMapper;
+use Fabiang\LaminasLanguageRoute\Entity\LocaleUserInterface;
+use Fabiang\LaminasLanguageRoute\Mvc\Router\Http\LanguageTreeRouteStack;
+use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
+use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\EventManager\AbstractListenerAggregate;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\I18n\Translator\TranslatorInterface;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Router\RouteStackInterface;
+use Laminas\Stdlib\RequestInterface;
+
+use function method_exists;
 
 /**
  * Injects language into translator and updates user locale
- *
- * @author schurix
  */
-class RouteListener extends AbstractListenerAggregate{
-	
-	/** @var LanguageRouteOptions */
-	protected $options;
-	
-	/** @var RouteStackInterface */
-	protected $router;
-	
-	/** @var RequestInterface */
-	protected $request;
-	
-	/** @var AuthenticationServiceInterface */
-	protected $authService;
-	
-	/** @var ZfcUserMapper */
-	protected $userMapper;
-	
-	 /** @var TranslatorInterface */
-	protected $translator;
-	
-	function __construct(LanguageRouteOptions $options, RouteStackInterface $router, RequestInterface $request, TranslatorInterface $translator, AuthenticationServiceInterface $authService = null, ZfcUserMapper $userMapper = null) {
-		$this->options = $options;
-		$this->router = $router;
-		$this->request = $request;
-		$this->authService = $authService;
-		$this->translator = $translator;
-		$this->userMapper = $userMapper;
-	}
+class RouteListener extends AbstractListenerAggregate
+{
+    private LanguageRouteOptions $options;
+    private RouteStackInterface $router;
+    private RequestInterface $request;
+    private TranslatorInterface $translator;
+    private ?AuthenticationServiceInterface $authService = null;
 
-	
-	public function attach(EventManagerInterface $events, $priority = 10) {
-		$this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], $priority);
-	}
-	
-	public function onRoute($e){
-		$router = $this->router;
-		if(!$router instanceof LanguageTreeRouteStack){
-			return;
-		}
-		$this->router->match($this->request);
-		$locale = $this->router->getLastMatchedLocale();
-		if(empty($locale)){
-			return;
-		}
-		
-		if(is_callable([$this->translator, 'setLocale'])){
-			$this->translator->setLocale($locale);
-		}
-		
-		if($this->authService && $this->authService->hasIdentity()){
-			$user = $this->authService->getIdentity();
-			if($user instanceof LocaleUserInterface){
-				$user->setLocale($locale);
-			}
-			// use the zfc user mapper to update if available
-			if($this->userMapper){
-				$this->userMapper->update($user);
-			}
-		}
-	}
+    public function __construct(
+        LanguageRouteOptions $options,
+        RouteStackInterface $router,
+        RequestInterface $request,
+        TranslatorInterface $translator,
+        ?AuthenticationServiceInterface $authService = null
+    ) {
+        $this->options     = $options;
+        $this->router      = $router;
+        $this->request     = $request;
+        $this->authService = $authService;
+        $this->translator  = $translator;
+    }
+
+    /**
+     * @param integer $priority
+     */
+    public function attach(EventManagerInterface $events, $priority = 10): void
+    {
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], $priority);
+    }
+
+    public function onRoute(MvcEvent $e): void
+    {
+        $router = $this->router;
+        if (! $router instanceof LanguageTreeRouteStack) {
+            return;
+        }
+
+        $this->router->match($this->request);
+
+        $locale = $this->router->getLastMatchedLocale();
+        if (empty($locale)) {
+            return;
+        }
+
+        if (method_exists($this->translator, 'setLocale')) {
+            $this->translator->setLocale($locale);
+        }
+
+        if ($this->authService && $this->authService->hasIdentity()) {
+            $user = $this->authService->getIdentity();
+            if ($user instanceof LocaleUserInterface) {
+                $user->setLocale($locale);
+            }
+        }
+    }
 }

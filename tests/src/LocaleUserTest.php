@@ -22,12 +22,28 @@ declare(strict_types=1);
 
 namespace Fabiang\LaminasLanguageRoute\Entity;
 
-/**
- * Simple interface to store locale in user entity
- */
-interface LocaleUserInterface
-{
-    public function getLocale(): string;
+use PHPUnit\Framework\TestCase;
 
-    public function setLocale(string $locale): void;
+final class LocaleUserTest extends TestCase
+{
+    private object $object;
+
+    protected function setUp(): void
+    {
+        $this->object = new class implements LocaleUserInterface {
+            use LocaleUserTrait;
+        };
+    }
+
+    /**
+     * @test
+     * @covers \Fabiang\LaminasLanguageRoute\Entity\LocaleUserTrait::setLocale
+     * @covers \Fabiang\LaminasLanguageRoute\Entity\LocaleUserTrait::getLocale
+     */
+    public function locale(): void
+    {
+        $this->assertSame('en_US', $this->object->getLocale());
+        $this->object->setLocale('de_DE');
+        $this->assertSame('de_DE', $this->object->getLocale());
+    }
 }
