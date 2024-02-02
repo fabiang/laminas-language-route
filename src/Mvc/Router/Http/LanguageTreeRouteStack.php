@@ -144,7 +144,16 @@ class LanguageTreeRouteStack extends TranslatorAwareTreeRouteStack
         if (count($languages) > 1 && in_array($pathParts[0], $languageKeys)) {
             // if language was provided, save the locale and adjust the baseUrl
             $locale = $languages[$pathParts[0]];
-            $this->setBaseUrl($oldBase . '/' . $pathParts[0]);
+
+            // if only the language was provided
+            if (count($pathParts) === 1) {
+                $this->baseUrl = '';
+                $uri->setPath('/');
+                $pathOffset = 0;
+            // if the language was provided along with other path parts
+            } else {
+                $this->setBaseUrl($oldBase . '/' . $pathParts[0]);
+            }
         } elseif (! empty($this->getAuthenticationService()) && $this->getAuthenticationService()->hasIdentity()) {
             // try to get user language if no language was provided by url
             $user = $this->getAuthenticationService()->getIdentity();

@@ -90,6 +90,34 @@ class LanguageTreeRouteStackMatchTest extends TestCase
      * @covers ::match
      * @covers ::getLastMatchedLocale
      */
+    public function matchLocaleFromURIWithoutPath(): void
+    {
+        $translator = $this->prophesize(Translator::class);
+        $translator->getLocale()->willReturn('de_DE');
+
+        $options = new LanguageRouteOptions();
+        $this->route->setLanguageOptions($options);
+
+        $this->route->setBaseUrl('/');
+        $this->route->addRoute('phpunit', ['type' => 'literal', 'options' => ['route' => '/']]);
+
+        $uri     = new URI('http://phpunit/de');
+        $request = $this->prophesize(Request::class);
+        $request->getUri()->willReturn($uri);
+
+        $routeMatch = $this->route->match($request->reveal(), null, ['translator' => $translator->reveal()]);
+        $this->assertInstanceOf(RouteMatch::class, $routeMatch);
+        $this->assertSame('phpunit', $routeMatch->getMatchedRouteName());
+        $this->assertSame(['locale' => 'de_DE'], $routeMatch->getParams());
+        $this->assertSame('', $this->route->getBaseUrl());
+        $this->assertSame('de_DE', $this->route->getLastMatchedLocale());
+    }
+
+    /**
+     * @test
+     * @covers ::match
+     * @covers ::getLastMatchedLocale
+     */
     public function matchLocaleFromURIWithBaseURLFormRequest(): void
     {
         $translator = $this->prophesize(Translator::class);
