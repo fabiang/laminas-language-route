@@ -24,13 +24,13 @@ namespace Fabiang\LaminasLanguageRoute\Listener\Service;
 
 use Fabiang\LaminasLanguageRoute\Listener\RouteListener;
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
-use Interop\Container\ContainerInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Router\RouteStackInterface;
 use Laminas\Stdlib\RequestInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Container\ContainerInterface;
 
 /**
  * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Listener\Service\RouteListenerFactory

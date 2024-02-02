@@ -24,7 +24,6 @@ namespace Fabiang\LaminasLanguageRoute;
 
 use Fabiang\LaminasLanguageRoute\Listener\RouteListener;
 use Fabiang\LaminasLanguageRoute\Mvc\Router\Http\LanguageTreeRouteStack;
-use Interop\Container\ContainerInterface;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\Mvc\ApplicationInterface;
@@ -32,6 +31,7 @@ use Laminas\Mvc\MvcEvent;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Container\ContainerInterface;
 
 /**
  * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Module

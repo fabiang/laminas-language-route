@@ -24,12 +24,12 @@ namespace Fabiang\LaminasLanguageRoute\View\Helper\Service;
 
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
 use Fabiang\LaminasLanguageRoute\View\Helper\LanguageSwitch;
-use Interop\Container\ContainerInterface;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Router\Http\RouteMatch;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Container\ContainerInterface;
 
 /**
  * @coversDefaultClass \Fabiang\LaminasLanguageRoute\View\Helper\Service\LanguageSwitchFactory

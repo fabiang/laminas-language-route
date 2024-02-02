@@ -24,11 +24,11 @@ namespace Fabiang\LaminasLanguageRoute\Mvc\Router\Http\Service;
 
 use Fabiang\LaminasLanguageRoute\Mvc\Router\Http\LanguageTreeRouteStack;
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
-use Interop\Container\ContainerInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Router\RouteStackInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Container\ContainerInterface;
 
 /**
  * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Mvc\Router\Http\Service\LanguageTreeRouteStackDelegatorFactory

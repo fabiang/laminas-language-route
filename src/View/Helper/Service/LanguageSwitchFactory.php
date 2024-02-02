@@ -24,8 +24,8 @@ namespace Fabiang\LaminasLanguageRoute\View\Helper\Service;
 
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
 use Fabiang\LaminasLanguageRoute\View\Helper\LanguageSwitch;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 final class LanguageSwitchFactory implements FactoryInterface
 {

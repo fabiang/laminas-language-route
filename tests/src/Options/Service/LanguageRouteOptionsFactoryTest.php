@@ -23,9 +23,9 @@ declare(strict_types=1);
 namespace Fabiang\LaminasLanguageRoute\Options\Service;
 
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
-use Interop\Container\ContainerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Container\ContainerInterface;
 
 /**
  * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Options\Service\LanguageRouteOptionsFactory

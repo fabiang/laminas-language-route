@@ -24,8 +24,8 @@ namespace Fabiang\LaminasLanguageRoute\Listener\Service;
 
 use Fabiang\LaminasLanguageRoute\Listener\RouteListener;
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 final class RouteListenerFactory implements FactoryInterface
 {

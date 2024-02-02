@@ -6,8 +6,7 @@ language in the MvcTranslator.
 [![Latest Stable Version](http://poser.pugx.org/fabiang/laminas-language-route/v)](https://packagist.org/packages/fabiang/laminas-language-route)
 [![PHP Version Require](http://poser.pugx.org/fabiang/laminas-language-route/require/php)](https://packagist.org/packages/fabiang/laminas-language-route)
 [![License](http://poser.pugx.org/fabiang/laminas-language-route/license)](https://packagist.org/packages/fabiang/laminas-language-route)
-[![Static Code Analysis](https://github.com/fabiang/laminas-language-route/actions/workflows/static.yml/badge.svg)](https://github.com/fabiang/laminas-language-route/actions/workflows/static.yml)
-[![Unit Tests](https://github.com/fabiang/laminas-language-route/actions/workflows/unit.yml/badge.svg)](https://github.com/fabiang/laminas-language-route/actions/workflows/unit.yml)
+[![Continuous Integration](https://github.com/fabiang/laminas-language-route/actions/workflows/ci.yml/badge.svg)](https://github.com/fabiang/laminas-language-route/actions/workflows/ci.yml)
 
 ## Installation
 

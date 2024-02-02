@@ -24,9 +24,9 @@ namespace Fabiang\LaminasLanguageRoute\Mvc\Router\Http\Service;
 
 use Fabiang\LaminasLanguageRoute\Mvc\Router\Http\LanguageTreeRouteStack;
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
-use Interop\Container\ContainerInterface;
 use Laminas\Router\RouteStackInterface;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
+use Psr\Container\ContainerInterface;
 
 final class LanguageTreeRouteStackDelegatorFactory implements DelegatorFactoryInterface
 {

@@ -23,8 +23,8 @@ declare(strict_types=1);
 namespace Fabiang\LaminasLanguageRoute\Options\Service;
 
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 final class LanguageRouteOptionsFactory implements FactoryInterface
 {
