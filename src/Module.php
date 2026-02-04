@@ -29,13 +29,18 @@ use Laminas\ModuleManager\Feature\ServiceProviderInterface;
 use Laminas\ModuleManager\Feature\ViewHelperProviderInterface;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Router\Http\TreeRouteStack;
+use Override;
 
-class Module implements
+/**
+ * @psalm-suppress UnusedClass
+ */
+final class Module implements
     ConfigProviderInterface,
     ServiceProviderInterface,
     BootstrapListenerInterface,
     ViewHelperProviderInterface
 {
+    #[Override]
     public function onBootstrap(EventInterface $e): void
     {
         if ($e instanceof MvcEvent) {
@@ -49,11 +54,13 @@ class Module implements
         }
     }
 
+    #[Override]
     public function getConfig(): array
     {
         return require __DIR__ . '/../config/module.config.php';
     }
 
+    #[Override]
     public function getServiceConfig(): array
     {
         return [
@@ -68,6 +75,7 @@ class Module implements
         ];
     }
 
+    #[Override]
     public function getViewHelperConfig(): array
     {
         return [

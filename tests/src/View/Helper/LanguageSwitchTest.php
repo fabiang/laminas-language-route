@@ -29,14 +29,13 @@ use Laminas\Router\RouteMatch;
 use Laminas\View\Helper\Url as URLHelper;
 use Laminas\View\Renderer\PhpRenderer;
 use Laminas\View\Renderer\RendererInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\View\Helper\LanguageSwitch
- */
+#[CoversClass(LanguageSwitch::class)]
 class LanguageSwitchTest extends TestCase
 {
     use ProphecyTrait;
@@ -67,13 +66,7 @@ class LanguageSwitchTest extends TestCase
         $this->helper->setView($this->view->reveal());
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderPartial
-     */
-    public function invokePartial(): void
+    public function testInvokePartial(): void
     {
         $translator = $this->prophesize(Translator::class);
 
@@ -104,13 +97,7 @@ class LanguageSwitchTest extends TestCase
         $this->assertSame('partialcontent', $result);
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderPartial
-     */
-    public function invokeListItemNoPartialGiven(): void
+    public function testInvokeListItemNoPartialGiven(): void
     {
         $this->expectException(I18nException\InvalidArgumentException::class);
 
@@ -125,13 +112,7 @@ class LanguageSwitchTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderNavbar
-     */
-    public function invokeNavbar(): void
+    public function testInvokeNavbar(): void
     {
         $translator = $this->prophesize(Translator::class);
 
@@ -155,13 +136,7 @@ class LanguageSwitchTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderSelect
-     */
-    public function invokeSelect(): void
+    public function testInvokeSelect(): void
     {
         $translator = $this->prophesize(Translator::class);
         $translator->getLocale()->willReturn('de_DE');
@@ -182,13 +157,7 @@ class LanguageSwitchTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderDiv
-     */
-    public function invokeDiv(): void
+    public function testInvokeDiv(): void
     {
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'de_DE'])->willReturn('/test');
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'en_US'])->willReturn('/test');
@@ -216,13 +185,7 @@ class LanguageSwitchTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderDiv
-     */
-    public function invokeDivNotRouteMatchPassed(): void
+    public function testInvokeDivNotRouteMatchPassed(): void
     {
         $this->urlHelper->__invoke('home', ['locale' => 'de_DE'])->willReturn('/test');
         $this->urlHelper->__invoke('home', ['locale' => 'en_US'])->willReturn('/test');
@@ -253,45 +216,27 @@ class LanguageSwitchTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__invoke
-     */
-    public function invokeNotPluggableView(): void
+    public function testInvokeNotPluggableView(): void
     {
         $view = $this->prophesize(RendererInterface::class);
         $this->helper->setView($view->reveal());
         $this->assertSame('', $this->helper->__invoke(LanguageSwitch::RENDER_TYPE_PARTIAL));
     }
 
-    /**
-     * @test
-     * @covers ::__invoke
-     */
-    public function invokeNoTranslator(): void
+    public function testInvokeNoTranslator(): void
     {
         $this->expectException(I18nException\RuntimeException::class);
         $this->helper->__invoke(LanguageSwitch::RENDER_TYPE_PARTIAL);
     }
 
-    /**
-     * @test
-     * @covers ::__invoke
-     */
-    public function invokeInvalidRendererType(): void
+    public function testInvokeInvalidRendererType(): void
     {
         $translator = $this->prophesize(Translator::class);
         $this->expectException(I18nException\InvalidArgumentException::class);
         $this->helper->__invoke('unknown', null, ['translator' => $translator->reveal()]);
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::getLanguageOptions
-     * @covers ::getRouteMatch
-     */
-    public function getters(): void
+    public function testGetters(): void
     {
         $this->assertSame($this->languageOptions, $this->helper->getLanguageOptions());
         $this->assertSame($this->routeMatch, $this->helper->getRouteMatch());

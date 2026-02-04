@@ -26,13 +26,12 @@ use Fabiang\LaminasLanguageRoute\Mvc\Router\Http\LanguageTreeRouteStack;
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Router\RouteStackInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Mvc\Router\Http\Service\LanguageTreeRouteStackDelegatorFactory
- */
+#[CoversClass(LanguageTreeRouteStackDelegatorFactory::class)]
 class LanguageTreeRouteStackDelegatorFactoryTest extends TestCase
 {
     use ProphecyTrait;
@@ -44,11 +43,7 @@ class LanguageTreeRouteStackDelegatorFactoryTest extends TestCase
         $this->factory = new LanguageTreeRouteStackDelegatorFactory();
     }
 
-    /**
-     * @test
-     * @covers ::__invoke
-     */
-    public function invoke(): void
+    public function testInvoke(): void
     {
         $router    = $this->prophesize(LanguageTreeRouteStack::class);
         $container = $this->prophesize(ContainerInterface::class);
@@ -76,11 +71,7 @@ class LanguageTreeRouteStackDelegatorFactoryTest extends TestCase
         $this->assertInstanceOf(LanguageTreeRouteStack::class, $instance);
     }
 
-    /**
-     * @test
-     * @covers ::__invoke
-     */
-    public function invokeNotCorrectRouterInstance(): void
+    public function testInvokeNotCorrectRouterInstance(): void
     {
         $router    = $this->prophesize(RouteStackInterface::class);
         $container = $this->prophesize(ContainerInterface::class);

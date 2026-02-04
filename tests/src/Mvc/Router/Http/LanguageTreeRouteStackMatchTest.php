@@ -30,12 +30,11 @@ use Laminas\I18n\Translator\Translator;
 use Laminas\Router\Http\RouteMatch;
 use Laminas\Stdlib\RequestInterface;
 use Laminas\Uri\Http as URI;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Mvc\Router\Http\LanguageTreeRouteStack
- */
+#[CoversClass(LanguageTreeRouteStack::class)]
 class LanguageTreeRouteStackMatchTest extends TestCase
 {
     use ProphecyTrait;
@@ -47,22 +46,13 @@ class LanguageTreeRouteStackMatchTest extends TestCase
         $this->route = new LanguageTreeRouteStack();
     }
 
-    /**
-     * @test
-     * @covers ::match
-     */
-    public function matchNoURI(): void
+    public function testMatchNoURI(): void
     {
         $request = $this->prophesize(RequestInterface::class);
         $this->assertNull($this->route->match($request->reveal()));
     }
 
-    /**
-     * @test
-     * @covers ::match
-     * @covers ::getLastMatchedLocale
-     */
-    public function matchLocaleFromURI(): void
+    public function testMatchLocaleFromURI(): void
     {
         $translator = $this->prophesize(Translator::class);
         $translator->getLocale()->willReturn('de_DE');
@@ -85,12 +75,7 @@ class LanguageTreeRouteStackMatchTest extends TestCase
         $this->assertSame('de_DE', $this->route->getLastMatchedLocale());
     }
 
-    /**
-     * @test
-     * @covers ::match
-     * @covers ::getLastMatchedLocale
-     */
-    public function matchLocaleFromURIWithoutPath(): void
+    public function testMatchLocaleFromURIWithoutPath(): void
     {
         $translator = $this->prophesize(Translator::class);
         $translator->getLocale()->willReturn('de_DE');
@@ -113,12 +98,7 @@ class LanguageTreeRouteStackMatchTest extends TestCase
         $this->assertSame('de_DE', $this->route->getLastMatchedLocale());
     }
 
-    /**
-     * @test
-     * @covers ::match
-     * @covers ::getLastMatchedLocale
-     */
-    public function matchLocaleFromURIWithBaseURLFormRequest(): void
+    public function testMatchLocaleFromURIWithBaseURLFormRequest(): void
     {
         $translator = $this->prophesize(Translator::class);
         $translator->getLocale()->willReturn('de_DE');
@@ -141,12 +121,7 @@ class LanguageTreeRouteStackMatchTest extends TestCase
         $this->assertSame('de_DE', $this->route->getLastMatchedLocale());
     }
 
-    /**
-     * @test
-     * @covers ::match
-     * @covers ::getLastMatchedLocale
-     */
-    public function matchLocaleFromURIWithTranslatorPassed(): void
+    public function testMatchLocaleFromURIWithTranslatorPassed(): void
     {
         $translator = $this->prophesize(Translator::class);
         $translator->getLocale()->willReturn('de_DE');
@@ -170,12 +145,7 @@ class LanguageTreeRouteStackMatchTest extends TestCase
         $this->assertSame('de_DE', $this->route->getLastMatchedLocale());
     }
 
-    /**
-     * @test
-     * @covers ::match
-     * @covers ::getLastMatchedLocale
-     */
-    public function matchLocaleFromIdentity(): void
+    public function testMatchLocaleFromIdentity(): void
     {
         $identity = $this->prophesize(LocaleUserInterface::class);
         $identity->getLocale()->willReturn('de_DE');
@@ -207,12 +177,7 @@ class LanguageTreeRouteStackMatchTest extends TestCase
         $this->assertSame('de_DE', $this->route->getLastMatchedLocale());
     }
 
-    /**
-     * @test
-     * @covers ::match
-     * @covers ::getLastMatchedLocale
-     */
-    public function matchLocaleFromTranslator(): void
+    public function testMatchLocaleFromTranslator(): void
     {
         $translator = $this->prophesize(Translator::class);
         $translator->getLocale()->willReturn('de_DE');
@@ -232,12 +197,7 @@ class LanguageTreeRouteStackMatchTest extends TestCase
         $this->assertSame('de_DE', $this->route->getLastMatchedLocale());
     }
 
-    /**
-     * @test
-     * @covers ::getLanguageOptions
-     * @covers ::setLanguageOptions
-     */
-    public function languageOptions(): void
+    public function testLanguageOptions(): void
     {
         $languageOptions = new LanguageRouteOptions();
         $this->assertNull($this->route->getLanguageOptions());
@@ -245,12 +205,7 @@ class LanguageTreeRouteStackMatchTest extends TestCase
         $this->assertSame($languageOptions, $this->route->getLanguageOptions());
     }
 
-    /**
-     * @test
-     * @covers ::getAuthenticationService
-     * @covers ::setAuthenticationService
-     */
-    public function authenticationService(): void
+    public function testAuthenticationService(): void
     {
         $this->assertNull($this->route->getAuthenticationService());
         $authenticationService = $this->prophesize(AuthenticationServiceInterface::class)->reveal();

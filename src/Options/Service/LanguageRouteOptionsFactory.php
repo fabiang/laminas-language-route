@@ -24,6 +24,7 @@ namespace Fabiang\LaminasLanguageRoute\Options\Service;
 
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 final class LanguageRouteOptionsFactory implements FactoryInterface
@@ -33,6 +34,7 @@ final class LanguageRouteOptionsFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

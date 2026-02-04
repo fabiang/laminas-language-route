@@ -27,13 +27,12 @@ use Laminas\I18n\Translator\Translator;
 use Laminas\Router\RouteMatch;
 use Laminas\View\Helper\Url as URLHelper;
 use Laminas\View\Renderer\PhpRenderer;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\View\Helper\LanguageSwitch
- */
+#[CoversClass(LanguageSwitch::class)]
 class LanguageSwitchListItemTest extends TestCase
 {
     use ProphecyTrait;
@@ -64,13 +63,7 @@ class LanguageSwitchListItemTest extends TestCase
         $this->helper->setView($this->view->reveal());
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderListitem
-     */
-    public function invokeListItem(): void
+    public function testInvokeListItem(): void
     {
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'de_DE'])->willReturn('/test');
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'en_US'])->willReturn('/test');
@@ -101,13 +94,7 @@ class LanguageSwitchListItemTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderListitem
-     */
-    public function invokeListItemNoRouteMatchPassed(): void
+    public function testInvokeListItemNoRouteMatchPassed(): void
     {
         $this->urlHelper->__invoke('home', ['locale' => 'de_DE'])->willReturn('/test');
         $this->urlHelper->__invoke('home', ['locale' => 'en_US'])->willReturn('/test');
@@ -138,13 +125,7 @@ class LanguageSwitchListItemTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderListitem
-     */
-    public function invokeListItemNoCurrentLocalePassed(): void
+    public function testInvokeListItemNoCurrentLocalePassed(): void
     {
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'de_DE'])->willReturn('/test');
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'en_US'])->willReturn('/test');
@@ -171,13 +152,7 @@ class LanguageSwitchListItemTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderListitem
-     */
-    public function invokeListItemWithDefaultClasses(): void
+    public function testInvokeListItemWithDefaultClasses(): void
     {
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'de_DE'])->willReturn('/test');
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'en_US'])->willReturn('/test');
@@ -202,13 +177,7 @@ class LanguageSwitchListItemTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderListitem
-     */
-    public function invokeListItemWithInvalidLocale(): void
+    public function testInvokeListItemWithInvalidLocale(): void
     {
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'de'])->willReturn('/test');
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'en'])->willReturn('/test');
@@ -234,13 +203,7 @@ class LanguageSwitchListItemTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     * @covers ::renderListitem
-     */
-    public function invokeListItemWithInvalidLocaleAndNoLocalePassed(): void
+    public function testInvokeListItemWithInvalidLocaleAndNoLocalePassed(): void
     {
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'de_DE'])->willReturn('/test');
         $this->urlHelper->__invoke(null, ['test' => '1', 'locale' => 'en_EN'])->willReturn('/test');

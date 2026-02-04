@@ -24,6 +24,9 @@ namespace Fabiang\LaminasLanguageRoute\Options;
 
 use Laminas\Stdlib\AbstractOptions;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class LanguageRouteOptions extends AbstractOptions
 {
     /**
@@ -45,6 +48,9 @@ class LanguageRouteOptions extends AbstractOptions
         return $this->languages;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function setLanguages(array $languages): void
     {
         $this->languages = $languages;
@@ -55,6 +61,9 @@ class LanguageRouteOptions extends AbstractOptions
         return $this->homeRoute;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function setHomeRoute(string $homeRoute): void
     {
         $this->homeRoute = $homeRoute;

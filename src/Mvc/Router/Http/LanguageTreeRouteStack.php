@@ -28,6 +28,7 @@ use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Mvc\I18n\Router\TranslatorAwareTreeRouteStack;
 use Laminas\Router\Http\RouteMatch;
 use Laminas\Stdlib\RequestInterface;
+use Override;
 
 use function array_keys;
 use function array_search;
@@ -42,6 +43,8 @@ use function substr;
 
 /**
  * Manages multilanguage routes by adding a language key to the baseUrl
+ *
+ * @psalm-suppress MissingTemplateParam
  */
 class LanguageTreeRouteStack extends TranslatorAwareTreeRouteStack
 {
@@ -56,6 +59,7 @@ class LanguageTreeRouteStack extends TranslatorAwareTreeRouteStack
      * @todo Is there any way to ensure that this is called only for top level?
      * @return mixed
      */
+    #[Override]
     public function assemble(array $params = [], array $options = []) /*: mixed*/
     {
         $translator = null;
@@ -100,6 +104,7 @@ class LanguageTreeRouteStack extends TranslatorAwareTreeRouteStack
      * @param integer|null $pathOffset
      * @psalm-suppress UndefinedDocblockClass
      */
+    #[Override]
     public function match(RequestInterface $request, $pathOffset = null, array $options = []): ?RouteMatch
     {
         // Languages should only be added on top level. Since there seems to be
@@ -205,6 +210,8 @@ class LanguageTreeRouteStack extends TranslatorAwareTreeRouteStack
     /**
      * Returns the locale that was found in the last matched URL. It is also
      * stored if no RouteMatch instance is provided (e.g. 404 error)
+     *
+     * @psalm-suppress PossiblyUnusedMethod
      */
     public function getLastMatchedLocale(): ?string
     {

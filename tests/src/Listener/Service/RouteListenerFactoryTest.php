@@ -28,13 +28,12 @@ use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Router\RouteStackInterface;
 use Laminas\Stdlib\RequestInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Listener\Service\RouteListenerFactory
- */
+#[CoversClass(RouteListenerFactory::class)]
 class RouteListenerFactoryTest extends TestCase
 {
     use ProphecyTrait;
@@ -46,11 +45,7 @@ class RouteListenerFactoryTest extends TestCase
         $this->factory = new RouteListenerFactory();
     }
 
-    /**
-     * @test
-     * @covers ::__invoke
-     */
-    public function invoke(): void
+    public function testInvoke(): void
     {
         $container = $this->prophesize(ContainerInterface::class);
         $container->get(LanguageRouteOptions::class)
