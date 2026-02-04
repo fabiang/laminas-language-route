@@ -12,6 +12,7 @@ composer.lock
 *.swl
 *~.nib
 *.orig
+*.bak
 .phpunit.result.cache
 .phpcs-cache
 

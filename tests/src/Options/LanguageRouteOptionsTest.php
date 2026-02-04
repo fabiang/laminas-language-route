@@ -22,12 +22,11 @@ declare(strict_types=1);
 
 namespace Fabiang\LaminasLanguageRoute\Options;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions
- */
+#[CoversClass(LanguageRouteOptions::class)]
 class LanguageRouteOptionsTest extends TestCase
 {
     use ProphecyTrait;
@@ -42,39 +41,21 @@ class LanguageRouteOptionsTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::setLanguages
-     * @covers ::getLanguages
-     */
-    public function language(): void
+    public function testLanguage(): void
     {
         $this->assertSame(['ru' => 'ru_RU', 'uk' => 'uk_UA'], $this->options->getLanguages());
         $this->options->setLanguages(['de' => 'de_DE']);
         $this->assertSame(['de' => 'de_DE'], $this->options->getLanguages());
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::setLanguages
-     * @covers ::getLanguages
-     */
-    public function homeRoute(): void
+    public function testHomeRoute(): void
     {
         $this->assertSame('test', $this->options->getHomeRoute());
         $this->options->setHomeRoute('foobar');
         $this->assertSame('foobar', $this->options->getHomeRoute());
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::setHomeRoute
-     * @covers ::getHomeRoute
-     */
-    public function defaults(): void
+    public function testDefaults(): void
     {
         $options = new LanguageRouteOptions();
         $this->assertSame(['de' => 'de_DE', 'en' => 'en_US'], $options->getLanguages());

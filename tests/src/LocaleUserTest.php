@@ -22,8 +22,10 @@ declare(strict_types=1);
 
 namespace Fabiang\LaminasLanguageRoute\Entity;
 
+use PHPUnit\Framework\Attributes\CoversTrait;
 use PHPUnit\Framework\TestCase;
 
+#[CoversTrait(LocaleUserTrait::class)]
 final class LocaleUserTest extends TestCase
 {
     private object $object;
@@ -35,12 +37,7 @@ final class LocaleUserTest extends TestCase
         };
     }
 
-    /**
-     * @test
-     * @covers \Fabiang\LaminasLanguageRoute\Entity\LocaleUserTrait::setLocale
-     * @covers \Fabiang\LaminasLanguageRoute\Entity\LocaleUserTrait::getLocale
-     */
-    public function locale(): void
+    public function testLocale(): void
     {
         $this->assertSame('en_US', $this->object->getLocale());
         $this->object->setLocale('de_DE');

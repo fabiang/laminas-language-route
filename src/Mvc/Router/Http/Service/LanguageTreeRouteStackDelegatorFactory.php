@@ -26,6 +26,7 @@ use Fabiang\LaminasLanguageRoute\Mvc\Router\Http\LanguageTreeRouteStack;
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
 use Laminas\Router\RouteStackInterface;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 final class LanguageTreeRouteStackDelegatorFactory implements DelegatorFactoryInterface
@@ -33,6 +34,7 @@ final class LanguageTreeRouteStackDelegatorFactory implements DelegatorFactoryIn
     /**
      * @param string $name
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $name,

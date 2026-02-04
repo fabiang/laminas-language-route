@@ -32,6 +32,7 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Router\RouteStackInterface;
 use Laminas\Stdlib\RequestInterface;
+use Override;
 
 use function method_exists;
 
@@ -40,7 +41,12 @@ use function method_exists;
  */
 class RouteListener extends AbstractListenerAggregate
 {
+    /**
+     * @psalm-suppress UnusedProperty
+     * @todo Remove if really not needed
+     */
     private LanguageRouteOptions $options;
+
     private RouteStackInterface $router;
     private RequestInterface $request;
     private TranslatorInterface $translator;
@@ -63,11 +69,15 @@ class RouteListener extends AbstractListenerAggregate
     /**
      * @param integer $priority
      */
+    #[Override]
     public function attach(EventManagerInterface $events, $priority = 10): void
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], $priority);
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedParam
+     */
     public function onRoute(MvcEvent $e): void
     {
         $router = $this->router;

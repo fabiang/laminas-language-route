@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Psalm
         uses: docker://vimeo/psalm-github-actions
@@ -40,25 +40,35 @@ jobs:
 
     strategy:
       matrix:
-        php_version: ['7.4', '8.0', '8.1', '8.2', '8.3']
+        php:
+          - version: 8.1
+            compose_args: ''
+          - version: 8.2
+            compose_args: ''
+          - version: 8.3
+            compose_args: ''
+          - version: 8.4
+            compose_args: ''
+          - version: 8.5
+            compose_args: '--ignore-platform-req=php' # laminas-mvc has no support for 8.5 yet
         prefer-lowest: ['', '--prefer-lowest']
 
-    name: Unit Tests - PHP ${{ matrix.php_version }} ${{ matrix.prefer-lowest }}
+    name: Unit Tests - PHP ${{ matrix.php.version }} ${{ matrix.prefer-lowest }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
 
     - name: Install PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: ${{ matrix.php_version }}
+        php-version: ${{ matrix.php.version }}
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -66,7 +76,7 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      run: composer update --prefer-dist --no-progress --with-all-dependencies ${{ matrix.prefer-lowest }}
+      run: composer update --prefer-dist --no-progress --with-all-dependencies ${{ matrix.prefer-lowest }} ${{ matrix.php.compose_args }}
 
     - name: Run test suite
-      run: ./vendor/bin/phpunit --verbose --order-by=random
+      run: ./vendor/bin/phpunit

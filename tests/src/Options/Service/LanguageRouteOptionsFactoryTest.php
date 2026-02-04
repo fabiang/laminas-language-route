@@ -23,13 +23,12 @@ declare(strict_types=1);
 namespace Fabiang\LaminasLanguageRoute\Options\Service;
 
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Options\Service\LanguageRouteOptionsFactory
- */
+#[CoversClass(LanguageRouteOptionsFactory::class)]
 class LanguageRouteOptionsFactoryTest extends TestCase
 {
     use ProphecyTrait;
@@ -41,11 +40,7 @@ class LanguageRouteOptionsFactoryTest extends TestCase
         $this->factory = new LanguageRouteOptionsFactory();
     }
 
-    /**
-     * @test
-     * @covers ::__invoke
-     */
-    public function invoke(): void
+    public function testInvoke(): void
     {
         $container = $this->prophesize(ContainerInterface::class);
         $container->get('config')

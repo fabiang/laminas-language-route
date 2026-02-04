@@ -31,14 +31,13 @@ use Laminas\I18n\Translator\Translator;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Router\RouteStackInterface;
 use Laminas\Stdlib\RequestInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Listener\RouteListener
- */
+#[CoversClass(RouteListener::class)]
 class RouteListenerTest extends TestCase
 {
     use ProphecyTrait;
@@ -67,11 +66,7 @@ class RouteListenerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::attach
-     */
-    public function attach(): void
+    public function testAttach(): void
     {
         $events = $this->prophesize(EventManagerInterface::class);
         $events->attach(MvcEvent::EVENT_ROUTE, [$this->object, 'onRoute'], 1000)
@@ -80,12 +75,7 @@ class RouteListenerTest extends TestCase
         $this->object->attach($events->reveal(), 1000);
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::onRoute
-     */
-    public function onRoute(): void
+    public function testOnRoute(): void
     {
         $this->router->match(Argument::type(RequestInterface::class))
             ->shouldBeCalled();
@@ -111,11 +101,7 @@ class RouteListenerTest extends TestCase
         $this->object->onRoute($e);
     }
 
-    /**
-     * @test
-     * @covers ::onRoute
-     */
-    public function onRouteNotCorrectRouter(): void
+    public function testOnRouteNotCorrectRouter(): void
     {
         $router = $this->prophesize(RouteStackInterface::class);
 
@@ -151,11 +137,7 @@ class RouteListenerTest extends TestCase
         $object->onRoute($e);
     }
 
-    /**
-     * @test
-     * @covers ::onRoute
-     */
-    public function onRouteNoMatchingLocale(): void
+    public function testOnRouteNoMatchingLocale(): void
     {
         $this->router->match(Argument::type(RequestInterface::class))
             ->shouldBeCalled();
@@ -181,12 +163,7 @@ class RouteListenerTest extends TestCase
         $this->object->onRoute($e);
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::onRoute
-     */
-    public function onRouteNoAuthServicePassed(): void
+    public function testOnRouteNoAuthServicePassed(): void
     {
         $object = new RouteListener(
             $this->options,

@@ -25,6 +25,7 @@ namespace Fabiang\LaminasLanguageRoute\Listener\Service;
 use Fabiang\LaminasLanguageRoute\Listener\RouteListener;
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 final class RouteListenerFactory implements FactoryInterface
@@ -32,6 +33,7 @@ final class RouteListenerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): RouteListener
     {
         $languageOptions = $container->get(LanguageRouteOptions::class);

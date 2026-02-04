@@ -24,12 +24,11 @@ namespace Fabiang\LaminasLanguageRoute\Mvc\Router\Http;
 
 use Fabiang\LaminasLanguageRoute\Options\LanguageRouteOptions;
 use Laminas\I18n\Translator\Translator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Mvc\Router\Http\LanguageTreeRouteStack
- */
+#[CoversClass(LanguageTreeRouteStack::class)]
 class LanguageTreeRouteStackAssembleTest extends TestCase
 {
     use ProphecyTrait;
@@ -44,12 +43,7 @@ class LanguageTreeRouteStackAssembleTest extends TestCase
         $this->route->setLanguageOptions($this->options);
     }
 
-    /**
-     * @test
-     * @covers ::assemble
-     * @covers ::getRouteLanguages
-     */
-    public function assembleLocaleFromTranslatorFromOptions(): void
+    public function testAssembleLocaleFromTranslatorFromOptions(): void
     {
         $translator = $this->prophesize(Translator::class);
         $translator->getLocale()->willReturn('de_DE');
@@ -65,12 +59,7 @@ class LanguageTreeRouteStackAssembleTest extends TestCase
         $this->assertSame('/foobar', $this->route->getBaseUrl());
     }
 
-    /**
-     * @test
-     * @covers ::assemble
-     * @covers ::getRouteLanguages
-     */
-    public function assembleLocaleWithoutLanguages(): void
+    public function testAssembleLocaleWithoutLanguages(): void
     {
         $this->route->setLanguageOptions(null);
 
@@ -88,12 +77,7 @@ class LanguageTreeRouteStackAssembleTest extends TestCase
         $this->assertSame('/foobar', $this->route->getBaseUrl());
     }
 
-    /**
-     * @test
-     * @covers ::assemble
-     * @covers ::getRouteLanguages
-     */
-    public function assembleLocaleWithTranslatorFromObject(): void
+    public function testAssembleLocaleWithTranslatorFromObject(): void
     {
         $translator = $this->prophesize(Translator::class);
         $translator->getLocale()->willReturn('de_DE');
@@ -111,12 +95,7 @@ class LanguageTreeRouteStackAssembleTest extends TestCase
         $this->assertSame('/foobar', $this->route->getBaseUrl());
     }
 
-    /**
-     * @test
-     * @covers ::assemble
-     * @covers ::getRouteLanguages
-     */
-    public function assembleLocaleFromParams(): void
+    public function testAssembleLocaleFromParams(): void
     {
         $translator = $this->prophesize(Translator::class);
         $translator->getLocale()->willReturn('de_DE');
@@ -132,12 +111,7 @@ class LanguageTreeRouteStackAssembleTest extends TestCase
         $this->assertSame('/foobar', $this->route->getBaseUrl());
     }
 
-    /**
-     * @test
-     * @covers ::assemble
-     * @covers ::getRouteLanguages
-     */
-    public function assembleLocaleWithoutTranslator(): void
+    public function testAssembleLocaleWithoutTranslator(): void
     {
         $this->route->setBaseUrl('/foobar');
 

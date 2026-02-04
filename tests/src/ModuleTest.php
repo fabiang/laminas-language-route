@@ -28,14 +28,13 @@ use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\Mvc\ApplicationInterface;
 use Laminas\Mvc\MvcEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\Module
- */
+#[CoversClass(Module::class)]
 class ModuleTest extends TestCase
 {
     use ProphecyTrait;
@@ -47,11 +46,7 @@ class ModuleTest extends TestCase
         $this->module = new Module();
     }
 
-    /**
-     * @test
-     * @covers ::onBootstrap
-     */
-    public function onBootstrap(): void
+    public function testOnBootstrap(): void
     {
         $events = $this->prophesize(EventManagerInterface::class);
 
@@ -71,11 +66,7 @@ class ModuleTest extends TestCase
         $this->module->onBootstrap($e->reveal());
     }
 
-    /**
-     * @test
-     * @covers ::getConfig
-     */
-    public function getConfig(): void
+    public function testGetConfig(): void
     {
         $config = $this->module->getConfig();
         $this->assertIsArray($config);
@@ -84,11 +75,7 @@ class ModuleTest extends TestCase
         $this->assertSame(LanguageTreeRouteStack::class, $config['router']['router_class']);
     }
 
-    /**
-     * @test
-     * @covers ::getServiceConfig
-     */
-    public function getServiceConfig(): void
+    public function testGetServiceConfig(): void
     {
         $config = $this->module->getServiceConfig();
         $this->assertIsArray($config);
@@ -96,11 +83,7 @@ class ModuleTest extends TestCase
         $this->assertArrayHasKey('delegators', $config);
     }
 
-    /**
-     * @test
-     * @covers ::getViewHelperConfig
-     */
-    public function getViewHelperConfig(): void
+    public function testGetViewHelperConfig(): void
     {
         $config = $this->module->getViewHelperConfig();
         $this->assertIsArray($config);

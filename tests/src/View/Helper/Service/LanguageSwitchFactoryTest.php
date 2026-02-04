@@ -27,13 +27,12 @@ use Fabiang\LaminasLanguageRoute\View\Helper\LanguageSwitch;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Router\Http\RouteMatch;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
-/**
- * @coversDefaultClass \Fabiang\LaminasLanguageRoute\View\Helper\Service\LanguageSwitchFactory
- */
+#[CoversClass(LanguageSwitchFactory::class)]
 class LanguageSwitchFactoryTest extends TestCase
 {
     use ProphecyTrait;
@@ -45,11 +44,7 @@ class LanguageSwitchFactoryTest extends TestCase
         $this->factory = new LanguageSwitchFactory();
     }
 
-    /**
-     * @test
-     * @covers ::__invoke
-     */
-    public function invoke(): void
+    public function testInvoke(): void
     {
         $container = $this->prophesize(ContainerInterface::class);
         $container->has(LanguageRouteOptions::class)->willReturn(true);
@@ -69,11 +64,7 @@ class LanguageSwitchFactoryTest extends TestCase
         $this->assertSame($routeMatch, $instance->getRouteMatch());
     }
 
-    /**
-     * @test
-     * @covers ::__invoke
-     */
-    public function invokeNoLanguageOptionsSet(): void
+    public function testInvokeNoLanguageOptionsSet(): void
     {
         $container = $this->prophesize(ContainerInterface::class);
         $container->has(LanguageRouteOptions::class)->willReturn(false);
